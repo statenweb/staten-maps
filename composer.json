@@ -1,0 +1,13 @@
+{
+  "name": "statenweb/maps",
+  "description": "google maps!",
+  "keywords": ["wordpress"],
+  "license": "GPL-3.0+",
+  "authors": [
+    {
+      "name": "Mat Gargano",
+      "email": "mat@statenweb.com"
+    }
+  ],
+  "type": "wordpress-plugin"
+}
