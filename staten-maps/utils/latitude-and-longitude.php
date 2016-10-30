@@ -8,6 +8,7 @@ class Latitude_and_Longitude {
 	private $address;
 	private $lat;
 	private $lng;
+	private $base_url = 'http://maps.google.com/maps/api/geocode/json';
 
 	/**
 	 * If you enter in an address this returns the first result from Google's API for latitude / longitude
@@ -29,9 +30,9 @@ class Latitude_and_Longitude {
 	 */
 	public function process() {
 
-		$address  = urlencode( $this->address );
-		$base_url = 'http://maps.google.com/maps/api/geocode/json';
-		$url      = add_query_arg( array( 'address' => $address, 'sensor' => 'false' ), $base_url );
+		$address = urlencode( $this->address );
+
+		$url = add_query_arg( array( 'address' => $address, 'sensor' => 'false' ), $this->base_url );
 
 		$request = wp_remote_get( $url );
 
@@ -57,7 +58,6 @@ class Latitude_and_Longitude {
 			return $this->$key;
 		}
 	}
-
 
 
 }

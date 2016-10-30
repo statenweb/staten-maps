@@ -36,9 +36,15 @@ class Staten_Map {
 	public function add_get_lat_lng_button( $field ) {
 		if ( is_array( $field ) && $field['key'] == self::ADDRESS_KEY ) {
 			?>
-			<div class="lat-lng-message"></div>
+
+
+			<div class="lat-lng-message"
+			     style="background: #F55E4F;padding:10px 5px;color: #fff;margin: 0 0 10px;display: none;border-radius: 3px;border-left: none;"></div>
 			<div class="nonce" data-nonce="<?php echo wp_create_nonce( Lat_Lng::NONCE ); ?>"></div>
-			<button class="button staten-get-lat-lng">Get Lat and Lng</button><br>&nbsp;
+			<button class="button staten-get-lat-lng">Get Lat and Lng</button>
+			<div class="spinner"
+			     style="float:none;width:auto;height:auto;padding:10px 0 10px 50px;background-position:20px 0;"></div>
+			<br>&nbsp;
 			<?php
 		}
 	}
