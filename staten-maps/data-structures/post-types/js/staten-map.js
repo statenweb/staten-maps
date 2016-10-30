@@ -52,7 +52,7 @@ jQuery(function ($) {
         loading();
         if (!address) {
 
-            setMessage('Please enter in an address');
+            setMessage(statenMap.missingAddress);
             loading('hide');
             return;
         }
@@ -72,7 +72,7 @@ jQuery(function ($) {
                 $lng.val(response.data.lng);
 
             } else {
-                setMessage(response.data.message);
+                setMessage(statenMap.badAddress);
             }
         });
 

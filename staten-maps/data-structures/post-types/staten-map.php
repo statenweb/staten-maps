@@ -302,9 +302,13 @@ class Staten_Map {
 		}
 
 		wp_enqueue_script( self::HANDLE, plugin_dir_url( __FILE__ ) . 'js/staten-map.js', array(
-			'jquery',
-			'underscore'
+			'jquery'
 		) );
+		wp_localize_script(self::HANDLE, 'statenMap', array(
+			'missingAddress' => 'Please enter in an address',
+			'badAddress' => 'Unable to find a match for the address, please try again',
+
+		));
 
 
 	}

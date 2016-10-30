@@ -30,12 +30,12 @@ class Lat_Lng {
 				'lat' => $lat,
 				'lng' => $lng,
 			);
-			$message  = array_merge( $response, array( 'message' => 'Success' ) );
-			wp_send_json_success( $message );
+
+			wp_send_json_success( $response );
 		}
 
 
-		wp_send_json_error( array( 'message' => __( 'Issue getting latitude and longitude', 'staten-maps' ) ) );
+		wp_send_json_error();
 	}
 
 	private static function check_nonce( $name = 'security' ) {
