@@ -71,12 +71,17 @@ class Staten_Map {
 		            });";
 
 				if ( get_sub_field( 'tooltip' ) ):
+					$tooltip = get_sub_field( 'tooltip' );
+					$tooltip = str_replace( '\'', '&#39;', $tooltip );
+
+
+					$tooltip = str_replace( "\n", '', $tooltip );
 					$string .= " 	
 						
 		
 		
 		            var infoWindow" . $atts['id'] . "_" . $counter . " = new google.maps.InfoWindow({
-		                content: '" . esc_js( get_sub_field( 'tooltip' ) ) . "'
+		                content: '" . rtrim( $tooltip ) . "'
 		            });
 		
 		            google.maps.event.addListener(marker" . $atts['id'] . ", 'click', function () {
@@ -102,14 +107,13 @@ class Staten_Map {
 		<script>
 			var markers<?php esc_attr_e( $atts['id'] ) ?> = [];
 			var map<?php esc_attr_e( $atts['id'] ) ?> = new google.maps.Map(document.querySelector('#map-container-<?php esc_attr_e( $atts['id'] ) ?>'), {
-					center: new google.maps.LatLng(<?php echo esc_js( $first_lat )?>, <?php echo esc_js( $first_lng ); ?>),
-					zoom: <?php echo esc_js( $atts['zoom'] ); ?>,
-					scrollwheel: <?php echo esc_js( $atts['scrollwheel'] ); ?>,
-					<?php if ( $style_json ) :?>
-					styles: <?php echo $style_json; //escaped above ?>
-					<?php endif; ?>
-				})
-				;
+				center: new google.maps.LatLng(<?php echo esc_js( $first_lat )?>, <?php echo esc_js( $first_lng ); ?>),
+				zoom: <?php echo esc_js( $atts['zoom'] ); ?>,
+				scrollwheel: <?php echo esc_js( $atts['scrollwheel'] ); ?>,
+				<?php if ( $style_json ) :?>
+				styles: <?php echo $style_json; //escaped above ?>
+				<?php endif; ?>
+			});
 
 			google.maps.event.addListenerOnce(map<?php esc_attr_e( $atts['id'] ) ?>, 'idle', function () {
 				setTimeout(function () {
