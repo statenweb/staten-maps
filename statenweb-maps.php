@@ -9,6 +9,8 @@
 
 use Staten_Maps\Ajax\Lat_Lng;
 use Staten_Maps\Data_Structures\Post_Types\Staten_Map;
+use Staten_Maps\Enqueues;
+use Staten_Maps\Settings\Global_Settings;
 
 spl_autoload_register( function ( $class ) {
 	$base = explode( '\\', $class );
@@ -61,3 +63,9 @@ $staten_map_post_type = new Staten_Map();
 $staten_map_post_type->init();
 $ajax_lat_lng = new Lat_Lng();
 $ajax_lat_lng->init();
+$global_settings = new Global_Settings();
+$global_settings->init();
+$enqueues = new Enqueues();
+$enqueues->init();
+$staten_map = new \Staten_Maps\Shortcodes\Staten_Map();
+$staten_map->init();

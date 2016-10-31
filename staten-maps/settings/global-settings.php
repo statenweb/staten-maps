@@ -112,6 +112,67 @@ class Global_Settings {
 						'return_format'     => 'value',
 						'placeholder'       => '',
 					),
+
+					array(
+						'key'               => 'field_58169fe19b6fd',
+						'label'             => 'Styles',
+						'name'              => 'staten_maps_styles',
+						'type'              => 'repeater',
+						'instructions'      => '',
+						'required'          => 0,
+						'conditional_logic' => 0,
+						'wrapper'           => array(
+							'width' => '',
+							'class' => '',
+							'id'    => '',
+						),
+						'collapsed'         => '',
+						'min'               => '',
+						'max'               => '',
+						'layout'            => 'block',
+						'button_label'      => 'Add Style',
+						'sub_fields'        => array(
+							array(
+								'key'               => 'field_58169ff49b6fe',
+								'label'             => 'Handle',
+								'name'              => 'handle',
+								'type'              => 'text',
+								'instructions'      => 'what this is referred to as',
+								'required'          => 0,
+
+								'wrapper'           => array(
+									'width' => '',
+									'class' => '',
+									'id'    => '',
+								),
+								'default_value'     => '',
+								'placeholder'       => '',
+								'prepend'           => '',
+								'append'            => '',
+								'maxlength'         => '',
+							),
+							array(
+								'key'               => 'field_5816a0099b6ff',
+								'label'             => 'Style',
+								'name'              => 'style',
+								'type'              => 'textarea',
+								'instructions'      => 'This should be the json object, the value of the styles key',
+								'required'          => 1,
+								'conditional_logic' => 0,
+								'wrapper'           => array(
+									'width' => '',
+									'class' => '',
+									'id'    => '',
+								),
+								'default_value'     => '',
+								'placeholder'       => '',
+								'maxlength'         => '',
+								'rows'              => '',
+								'new_lines'         => '',
+							),
+						),
+					)
+
 				),
 				'location'              => array(
 					array(

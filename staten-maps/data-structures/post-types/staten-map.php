@@ -121,6 +121,25 @@ class Staten_Map {
 				'title'                 => 'Map Points',
 				'fields'                => array(
 					array(
+						'key'               => 'stylekeydafdasf',
+						'label'             => 'Style Key',
+						'name'              => 'style_key',
+						'type'              => 'text',
+						'instructions'      => 'This should match a key set in the plugin settings page',
+						'required'          => 0,
+						'conditional_logic' => 0,
+						'wrapper'           => array(
+							'width' => '',
+							'class' => '',
+							'id'    => '',
+						),
+						'default_value'     => '',
+						'placeholder'       => '',
+						'prepend'           => '',
+						'append'            => '',
+						'maxlength'         => '',
+					),
+					array(
 						'key'               => 'field_5814c69b1e6f5',
 						'label'             => 'Map Points',
 						'name'              => 'map_points',
@@ -260,6 +279,7 @@ class Staten_Map {
 								'return_format'     => 'value',
 								'placeholder'       => '',
 							),
+
 						),
 					),
 				),
@@ -304,11 +324,11 @@ class Staten_Map {
 		wp_enqueue_script( self::HANDLE, plugin_dir_url( __FILE__ ) . 'js/staten-map.js', array(
 			'jquery'
 		) );
-		wp_localize_script(self::HANDLE, 'statenMap', array(
+		wp_localize_script( self::HANDLE, 'statenMap', array(
 			'missingAddress' => 'Please enter in an address',
-			'badAddress' => 'Unable to find a match for the address, please try again',
+			'badAddress'     => 'Unable to find a match for the address, please try again',
 
-		));
+		) );
 
 
 	}

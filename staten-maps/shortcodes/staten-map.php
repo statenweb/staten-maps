@@ -34,6 +34,24 @@ class Staten_Map {
 		$first_lng     = 0;
 		$counter       = 0;
 		$marker_output = [];
+		$style         = get_field( 'style_key', $atts['id'] );
+		$style_json    = null;
+		if ( $style ) :
+
+			if ( have_rows( 'staten_maps_styles', 'options' ) ) :
+				while ( have_rows( 'staten_maps_styles', 'options' ) ) : the_row();
+					if ( $style === get_sub_field( 'handle' ) ) :
+						$style_json = get_sub_field( 'style' );
+					endif;
+				endwhile;
+			endif;
+
+		endif;
+
+		if ( ! self::is_json( $style_json ) ) {
+			$style_json = null;
+		}
+
 		if ( have_rows( 'map_points', $atts['id'] ) ):
 
 			// loop through the rows of data
@@ -44,23 +62,31 @@ class Staten_Map {
 					$first_lng = get_sub_field( 'longitude' );
 				endif;
 
-				$marker_output[] = "var marker" . $atts['id'] . " = new google.maps.Marker({
-                position: new google.maps.LatLng(" . get_sub_field( 'latitude' ) . ", " . get_sub_field( 'longitude' ) . "),
-                map: map" . $atts['id'] . "
+				$string = "var marker" . $atts['id'] . " = new google.maps.Marker({
+		                animation: google.maps.Animation.DROP,
+		                position: new google.maps.LatLng(" . get_sub_field( 'latitude' ) . ", " . get_sub_field( 'longitude' ) . "),
+		                map: map" . $atts['id'] . ",
+		                
+		
+		            });";
 
-            });
+				if ( get_sub_field( 'tooltip' ) ):
+					$string .= " 	
+						
+		
+		
+		            var infoWindow" . $atts['id'] . "_" . $counter . " = new google.maps.InfoWindow({
+		                content: '" . esc_js( get_sub_field( 'tooltip' ) ) . "'
+		            });
+		
+		            google.maps.event.addListener(marker" . $atts['id'] . ", 'click', function () {
+		                infoWindow" . $atts['id'] . "_" . $counter . ".open(map" . $atts['id'] . ", marker" . $atts['id'] . ");
+		            });
+		
+		            markers" . $atts['id'] . ".push(marker" . $atts['id'] . ");";
+				endif;
 
-
-            var infoWindow" . $atts['id'] . "_" . $counter . " = new google.maps.InfoWindow({
-                content: '" . get_sub_field( 'address' ) . "'
-            });
-
-            google.maps.event.addListener(marker" . $atts['id'] . ", 'click', function () {
-                infoWindow" . $atts['id'] . "_" . $counter . ".open(map" . $atts['id'] . ", marker" . $atts['id'] . ");
-            });
-
-            markers" . $atts['id'] . ".push(marker" . $atts['id'] . ");";
-
+				$marker_output[] = $string;
 
 				$counter ++;
 
@@ -76,10 +102,14 @@ class Staten_Map {
 		<script>
 			var markers<?php esc_attr_e( $atts['id'] ) ?> = [];
 			var map<?php esc_attr_e( $atts['id'] ) ?> = new google.maps.Map(document.querySelector('#map-container-<?php esc_attr_e( $atts['id'] ) ?>'), {
-				center: new google.maps.LatLng(<?php echo esc_js( $first_lat )?>, <?php echo esc_js( $first_lng ); ?>),
-				zoom: <?php echo esc_js( $atts['zoom'] ); ?>,
-				scrollwheel: <?php echo esc_js( $atts['scrollwheel'] ); ?>
-			});
+					center: new google.maps.LatLng(<?php echo esc_js( $first_lat )?>, <?php echo esc_js( $first_lng ); ?>),
+					zoom: <?php echo esc_js( $atts['zoom'] ); ?>,
+					scrollwheel: <?php echo esc_js( $atts['scrollwheel'] ); ?>,
+					<?php if ( $style_json ) :?>
+					styles: <?php echo $style_json; //escaped above ?>
+					<?php endif; ?>
+				})
+				;
 
 			google.maps.event.addListenerOnce(map<?php esc_attr_e( $atts['id'] ) ?>, 'idle', function () {
 				setTimeout(function () {
@@ -91,6 +121,12 @@ class Staten_Map {
 			endforeach;?>
 		</script><?php
 		return ob_get_clean();
+	}
+
+	public static function is_json( $string ) {
+		json_decode( $string );
+
+		return ( json_last_error() == JSON_ERROR_NONE );
 	}
 
 }
