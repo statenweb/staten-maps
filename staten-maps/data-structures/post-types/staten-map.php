@@ -69,7 +69,7 @@ class Staten_Map {
 				'not_found_in_trash' => __( 'No Maps found in Trash', 'staten-maps' ),
 				'menu_name'          => __( 'Maps', 'staten-maps' )
 			),
-			'menu_icon'           => 'dashicons dashicons-location-alt',
+			'menu_icon'           => 'dashicons-location-alt',
 			'query_var'           => true,
 			'publicly_queryable'  => true,
 			'exclude_from_search' => false,
