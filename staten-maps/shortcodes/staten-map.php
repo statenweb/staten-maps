@@ -52,6 +52,21 @@ class Staten_Map {
 			$style_json = null;
 		}
 
+		$markers_js_output_array   = [];
+		$markers_js_output_array[] = 'var icons = {';
+		if ( have_rows( 'staten_maps_markers', 'options' ) ):
+
+			while ( have_rows( 'staten_maps_markers', 'options' ) ): the_row();
+
+				$markers_js_output_array[] = esc_js( get_sub_field( 'key' ) ) . ": {icon: '" . esc_url( get_sub_field( 'image' ) ) . "'},";
+
+			endwhile;
+
+		endif;
+		$markers_js_output_array[] = '};';
+
+		$markers_js_output = implode( ' ', $markers_js_output_array );
+
 		if ( have_rows( 'map_points', $atts['id'] ) ):
 
 			// loop through the rows of data
@@ -62,15 +77,25 @@ class Staten_Map {
 					$first_lng = get_sub_field( 'longitude' );
 				endif;
 
-				$string = "var marker" . $atts['id'] . " = new google.maps.Marker({
-		                animation: google.maps.Animation.DROP,
-		                position: new google.maps.LatLng(" . get_sub_field( 'latitude' ) . ", " . get_sub_field( 'longitude' ) . "),
+				$icon = get_sub_field( 'type' );
+
+				$string = "var marker" . $atts['id'] . " = new google.maps.Marker({";
+
+				if ( $icon ):
+					$string .= "icon: icons['" . esc_js( $icon ) . "'].icon,";
+				endif;
+
+
+				$string .= "        position: new google.maps.LatLng(" . get_sub_field( 'latitude' ) . ", " . get_sub_field( 'longitude' ) . "),
 		                map: map" . $atts['id'] . ",
 		                
 		
 		            });";
 
 				if ( get_sub_field( 'tooltip' ) ):
+
+					// lets clean up the tooltip
+
 					$tooltip = get_sub_field( 'tooltip' );
 					$tooltip = str_replace( '\'', '&#39;', $tooltip );
 
@@ -105,6 +130,7 @@ class Staten_Map {
 			     style="min-height:<?php esc_attr_e( $atts['min-height'] ); ?>;"></div>
 		</div>
 		<script>
+			<?php echo $markers_js_output;?>
 			var markers<?php esc_attr_e( $atts['id'] ) ?> = [];
 			var map<?php esc_attr_e( $atts['id'] ) ?> = new google.maps.Map(document.querySelector('#map-container-<?php esc_attr_e( $atts['id'] ) ?>'), {
 				center: new google.maps.LatLng(<?php echo esc_js( $first_lat )?>, <?php echo esc_js( $first_lng ); ?>),

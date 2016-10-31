@@ -20,7 +20,6 @@ class Staten_Map {
 	public function init() {
 
 		$this->attach_hooks();
-		$this->register_settings();
 
 
 	}
@@ -30,6 +29,7 @@ class Staten_Map {
 		add_action( 'save_post', array( $this, 'save_post' ), 10, 2 );
 		add_action( 'acf/render_field', array( $this, 'add_get_lat_lng_button' ), 10, 1 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
+		add_action( 'init', array( $this, 'register_settings' ), PHP_INT_MAX );
 
 	}
 
@@ -116,16 +116,37 @@ class Staten_Map {
 	public function register_settings() {
 		if ( function_exists( 'acf_add_local_field_group' ) ):
 
+
+			$style_choices = [];
+			if ( have_rows( 'staten_maps_styles', 'options' ) ) :
+				while ( have_rows( 'staten_maps_styles', 'options' ) ) : the_row();
+					$style_choices[] = get_sub_field( 'handle' );
+				endwhile;
+			endif;
+
+			$type_choices = [];
+
+			if ( have_rows( 'staten_maps_markers', 'options' ) ):
+
+				while ( have_rows( 'staten_maps_markers', 'options' ) ): the_row();
+
+					$type_choices[] = get_sub_field( 'key' );
+
+				endwhile;
+
+			endif;
+
+
 			acf_add_local_field_group( array(
 				'key'                   => 'group_5814c696176d4',
 				'title'                 => 'Map Points',
 				'fields'                => array(
 					array(
-						'key'               => 'stylekeydafdasf',
+						'key'               => 'field_5fasdfc6e51e6fb',
 						'label'             => 'Style Key',
 						'name'              => 'style_key',
-						'type'              => 'text',
-						'instructions'      => 'This should match a key set in the plugin settings page',
+						'type'              => 'select',
+						'instructions'      => '',
 						'required'          => 0,
 						'conditional_logic' => 0,
 						'wrapper'           => array(
@@ -133,11 +154,15 @@ class Staten_Map {
 							'class' => '',
 							'id'    => '',
 						),
-						'default_value'     => '',
-						'placeholder'       => '',
-						'prepend'           => '',
-						'append'            => '',
-						'maxlength'         => '',
+						'choices'           => $style_choices,
+
+						'default_value' => array(),
+						'allow_null'    => 0,
+						'multiple'      => 0,
+						'ui'            => 0,
+						'ajax'          => 0,
+						'return_format' => 'label',
+						'placeholder'   => '',
 					),
 					array(
 						'key'               => 'field_5814c69b1e6f5',
@@ -266,18 +291,15 @@ class Staten_Map {
 									'class' => '',
 									'id'    => '',
 								),
-								'choices'           => array(
-									'red'    => 'Red',
-									'blue'   => 'Blue',
-									'orange' => 'Orange',
-								),
-								'default_value'     => array(),
-								'allow_null'        => 0,
-								'multiple'          => 0,
-								'ui'                => 0,
-								'ajax'              => 0,
-								'return_format'     => 'value',
-								'placeholder'       => '',
+								'choices'           => $type_choices,
+
+								'default_value' => array(),
+								'allow_null'    => 0,
+								'multiple'      => 0,
+								'ui'            => 0,
+								'ajax'          => 0,
+								'return_format' => 'label',
+								'placeholder'   => '',
 							),
 
 						),

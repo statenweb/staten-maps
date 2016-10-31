@@ -64,9 +64,9 @@ class Global_Settings {
 		if ( function_exists( 'acf_add_local_field_group' ) ):
 
 			acf_add_local_field_group( array(
-				'key'                   => 'group_581685fa299ac',
-				'title'                 => 'Staten Maps',
-				'fields'                => array(
+				'key'    => 'group_581685fa299ac',
+				'title'  => 'Staten Maps',
+				'fields' => array(
 					array(
 						'key'               => 'field_58168605119d0',
 						'label'             => 'Google Maps API Key',
@@ -114,6 +114,71 @@ class Global_Settings {
 					),
 
 					array(
+						'key'               => 'field_581739d0c4e7a',
+						'label'             => 'Markers',
+						'name'              => 'staten_maps_markers',
+						'type'              => 'repeater',
+						'instructions'      => '',
+						'required'          => 0,
+						'conditional_logic' => 0,
+						'wrapper'           => array(
+							'width' => '',
+							'class' => '',
+							'id'    => '',
+						),
+						'collapsed'         => '',
+						'min'               => '',
+						'max'               => '',
+						'layout'            => 'table',
+						'button_label'      => 'Add Row',
+						'sub_fields'        => array(
+							array(
+								'key'               => 'field_581739ebc4e7b',
+								'label'             => 'Key',
+								'name'              => 'key',
+								'type'              => 'text',
+								'instructions'      => '',
+								'required'          => 0,
+								'conditional_logic' => 0,
+								'wrapper'           => array(
+									'width' => '',
+									'class' => '',
+									'id'    => '',
+								),
+								'default_value'     => '',
+								'placeholder'       => '',
+								'prepend'           => '',
+								'append'            => '',
+								'maxlength'         => '',
+							),
+							array(
+								'key'               => 'field_581739f4c4e7c',
+								'label'             => 'Image',
+								'name'              => 'image',
+								'type'              => 'image',
+								'instructions'      => '',
+								'required'          => 0,
+								'conditional_logic' => 0,
+								'wrapper'           => array(
+									'width' => '',
+									'class' => '',
+									'id'    => '',
+								),
+								'return_format'     => 'url',
+								'preview_size'      => 'thumbnail',
+								'library'           => 'all',
+								'min_width'         => '',
+								'min_height'        => '',
+								'min_size'          => '',
+								'max_width'         => '',
+								'max_height'        => '',
+								'max_size'          => '',
+								'mime_types'        => '',
+							),
+						),
+					),
+
+					array(
 						'key'               => 'field_58169fe19b6fd',
 						'label'             => 'Styles',
 						'name'              => 'staten_maps_styles',
@@ -133,23 +198,23 @@ class Global_Settings {
 						'button_label'      => 'Add Style',
 						'sub_fields'        => array(
 							array(
-								'key'               => 'field_58169ff49b6fe',
-								'label'             => 'Handle',
-								'name'              => 'handle',
-								'type'              => 'text',
-								'instructions'      => 'what this is referred to as',
-								'required'          => 0,
+								'key'          => 'field_58169ff49b6fe',
+								'label'        => 'Handle',
+								'name'         => 'handle',
+								'type'         => 'text',
+								'instructions' => 'what this is referred to as',
+								'required'     => 0,
 
-								'wrapper'           => array(
+								'wrapper'       => array(
 									'width' => '',
 									'class' => '',
 									'id'    => '',
 								),
-								'default_value'     => '',
-								'placeholder'       => '',
-								'prepend'           => '',
-								'append'            => '',
-								'maxlength'         => '',
+								'default_value' => '',
+								'placeholder'   => '',
+								'prepend'       => '',
+								'append'        => '',
+								'maxlength'     => '',
 							),
 							array(
 								'key'               => 'field_5816a0099b6ff',
@@ -175,14 +240,14 @@ class Global_Settings {
 
 				),
 				'location'              => array(
-					array(
-						array(
-							'param'    => 'options_page',
-							'operator' => '==',
-							'value'    => 'global-options',
-						),
-					),
+			array(
+				array(
+					'param'    => 'options_page',
+					'operator' => '==',
+					'value'    => 'global-options',
 				),
+			),
+		),
 				'menu_order'            => 0,
 				'position'              => 'normal',
 				'style'                 => 'default',
