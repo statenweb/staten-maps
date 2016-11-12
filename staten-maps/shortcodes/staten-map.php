@@ -79,7 +79,7 @@ class Staten_Map {
 
 				$icon = get_sub_field( 'type' );
 
-				$string = "var marker" . $atts['id'] . " = new google.maps.Marker({";
+				$string = "marker" . $atts['id'] . " = new google.maps.Marker({";
 
 				if ( $icon ):
 					$string .= "icon: icons['" . esc_js( $icon ) . "'].icon,";
@@ -107,14 +107,30 @@ class Staten_Map {
 		
 		            var infoWindow" . $atts['id'] . "_" . $counter . " = new google.maps.InfoWindow({
 		                content: '" . rtrim( $tooltip ) . "'
-		            });
-		
-		            google.maps.event.addListener(marker" . $atts['id'] . ", 'click', function () {
+		            });";
+
+					if ( ! get_sub_field( 'tooltip_display_method' ) || 'click' === strtolower( get_sub_field( 'tooltip_display_method' ) ) ) :
+
+						$string .= "
+						google.maps.event.addListener(marker" . $atts['id'] . ", 'click', function () {
+		                infoWindow" . $atts['id'] . "_" . $counter . ".open(map" . $atts['id'] . ", marker" . $atts['id'] . ");
+		                infoWindow" . $atts['id'] . "_" . $counter . ".setPosition(new google.maps.LatLng(" . get_sub_field( 'latitude' ) . ", " . get_sub_field( 'longitude' ) . "));
+		            });";
+
+					elseif ( 'hover' === strtolower( get_sub_field( 'tooltip_display_method' ) ) ):
+
+						$string .= "google.maps.event.addListener(marker" . $atts['id'] . ", 'mouseover', function () {
 		                infoWindow" . $atts['id'] . "_" . $counter . ".open(map" . $atts['id'] . ", marker" . $atts['id'] . ");
 		                infoWindow" . $atts['id'] . "_" . $counter . ".setPosition(new google.maps.LatLng(" . get_sub_field( 'latitude' ) . ", " . get_sub_field( 'longitude' ) . "));
 		            });
-		
-		            markers" . $atts['id'] . ".push(marker" . $atts['id'] . ");";
+		            
+		            google.maps.event.addListener(marker" . $atts['id'] . ", 'mouseout', function () {
+		                infoWindow" . $atts['id'] . "_" . $counter . ".close(map" . $atts['id'] . ", marker" . $atts['id'] . ");
+		            });";
+					endif;
+
+
+					$string .= "markers" . $atts['id'] . ".push(marker" . $atts['id'] . ");";
 				endif;
 
 				$marker_output[] = $string;
@@ -133,6 +149,7 @@ class Staten_Map {
 		<script>
 			<?php echo $markers_js_output;?>
 			var markers<?php esc_attr_e( $atts['id'] ) ?> = [];
+			var marker<?php esc_attr_e( $atts['id'] ) ?>;
 			var map<?php esc_attr_e( $atts['id'] ) ?> = new google.maps.Map(document.querySelector('#map-container-<?php esc_attr_e( $atts['id'] ) ?>'), {
 				center: new google.maps.LatLng(<?php echo esc_js( $first_lat )?>, <?php echo esc_js( $first_lng ); ?>),
 				zoom: <?php echo esc_js( $atts['zoom'] ); ?>,

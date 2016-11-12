@@ -3,7 +3,7 @@
  * Plugin Name: Maps
  * Plugin URI:  https://statenweb.com
  * Description: Easy maps, nuff said!
- * Version:     0.1.1
+ * Version:     0.1.2
  */
 
 

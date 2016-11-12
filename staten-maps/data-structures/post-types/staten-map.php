@@ -302,6 +302,33 @@ class Staten_Map {
 								'placeholder'   => '',
 							),
 
+							array(
+								'key'               => 'field_5fasdf4c6e51e6fb',
+								'label'             => 'Tooltip Display Method',
+								'name'              => 'tooltip_display_method',
+								'type'              => 'select',
+								'instructions'      => 'Which way do you want the tooltips to show?',
+								'required'          => 0,
+								'conditional_logic' => 0,
+								'wrapper'           => array(
+									'width' => '',
+									'class' => '',
+									'id'    => '',
+								),
+								'choices' => array (
+									'click' => 'Click',
+									'hover' => 'Hover',
+								),
+
+								'default_value' => array('click'),
+								'allow_null'    => 0,
+								'multiple'      => 0,
+								'ui'            => 0,
+								'ajax'          => 0,
+								'return_format' => 'label',
+								'placeholder'   => '',
+							),
+
 						),
 					),
 				),

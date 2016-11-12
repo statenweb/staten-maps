@@ -25,13 +25,7 @@ class Enqueues {
 		$api_key = get_field( 'staten_maps_google_maps_api_key', 'options' );
 		$api_url = add_query_arg( array( 'key' => $api_key ), 'https://maps.googleapis.com/maps/api/js' );
 
-		wp_enqueue_script( self::HANDLE_SCRIPT, plugin_dir_url( __FILE__ ) . 'js/staten-map.js', array(
-			'jquery',
-
-		), '20151215', true );
-
-
-		wp_enqueue_script( self::HANDLE_GOOGLE_MAPS, $api_url, array( self::HANDLE_SCRIPT ) );
+		wp_enqueue_script( self::HANDLE_GOOGLE_MAPS, $api_url );
 
 	}
 
