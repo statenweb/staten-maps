@@ -111,6 +111,7 @@ class Staten_Map {
 		
 		            google.maps.event.addListener(marker" . $atts['id'] . ", 'click', function () {
 		                infoWindow" . $atts['id'] . "_" . $counter . ".open(map" . $atts['id'] . ", marker" . $atts['id'] . ");
+		                infoWindow" . $atts['id'] . "_" . $counter . ".setPosition(new google.maps.LatLng(" . get_sub_field( 'latitude' ) . ", " . get_sub_field( 'longitude' ) . "));
 		            });
 		
 		            markers" . $atts['id'] . ".push(marker" . $atts['id'] . ");";
