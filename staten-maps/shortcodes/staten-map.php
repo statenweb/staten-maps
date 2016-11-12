@@ -30,12 +30,13 @@ class Staten_Map {
 
 		ob_start();
 
-		$first_lat     = 0;
-		$first_lng     = 0;
-		$counter       = 0;
-		$marker_output = [];
-		$style         = get_field( 'style_key', $atts['id'] );
-		$style_json    = null;
+		$first_lat                      = 0;
+		$first_lng                      = 0;
+		$counter                        = 0;
+		$marker_output                  = [];
+		$style                          = get_field( 'style_key', $atts['id'] );
+		$default_tooltip_display_method = strtolower( get_field( 'default_tooltip_display_method', $atts['id'] ) );
+		$style_json                     = null;
 		if ( $style ) :
 
 			if ( have_rows( 'staten_maps_styles', 'options' ) ) :
@@ -109,7 +110,12 @@ class Staten_Map {
 		                content: '" . rtrim( $tooltip ) . "'
 		            });";
 
-					if ( ! get_sub_field( 'tooltip_display_method' ) || 'click' === strtolower( get_sub_field( 'tooltip_display_method' ) ) ) :
+					$tooltip_method = strtolower( get_sub_field( 'tooltip_display_method' ) );
+					if ( 'default' === $tooltip_method || ! get_sub_field( 'tooltip_display_method' ) ) :
+						$tooltip_method = $default_tooltip_display_method;
+					endif;
+
+					if ( 'click' === $tooltip_method ) :
 
 						$string .= "
 						google.maps.event.addListener(marker" . $atts['id'] . ", 'click', function () {
@@ -117,7 +123,7 @@ class Staten_Map {
 		                infoWindow" . $atts['id'] . "_" . $counter . ".setPosition(new google.maps.LatLng(" . get_sub_field( 'latitude' ) . ", " . get_sub_field( 'longitude' ) . "));
 		            });";
 
-					elseif ( 'hover' === strtolower( get_sub_field( 'tooltip_display_method' ) ) ):
+					elseif ( 'hover' === $tooltip_method ):
 
 						$string .= "google.maps.event.addListener(marker" . $atts['id'] . ", 'mouseover', function () {
 		                infoWindow" . $atts['id'] . "_" . $counter . ".open(map" . $atts['id'] . ", marker" . $atts['id'] . ");

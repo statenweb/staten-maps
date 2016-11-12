@@ -165,6 +165,32 @@ class Staten_Map {
 						'placeholder'   => '',
 					),
 					array(
+						'key'               => 'field_5fasfadfa51e6fb',
+						'label'             => 'Tooltip Display Method',
+						'name'              => 'default_tooltip_display_method',
+						'type'              => 'select',
+						'instructions'      => '',
+						'required'          => 0,
+						'conditional_logic' => 0,
+						'wrapper'           => array(
+							'width' => '',
+							'class' => '',
+							'id'    => '',
+						),
+						'choices' => array (
+							'click' => 'Click',
+							'hover' => 'Hover',
+						),
+
+						'default_value' => 'click',
+						'allow_null'    => 0,
+						'multiple'      => 0,
+						'ui'            => 0,
+						'ajax'          => 0,
+						'return_format' => 'label',
+						'placeholder'   => '',
+					),
+					array(
 						'key'               => 'field_5814c69b1e6f5',
 						'label'             => 'Map Points',
 						'name'              => 'map_points',
@@ -307,7 +333,7 @@ class Staten_Map {
 								'label'             => 'Tooltip Display Method',
 								'name'              => 'tooltip_display_method',
 								'type'              => 'select',
-								'instructions'      => 'Which way do you want the tooltips to show?',
+								'instructions'      => 'Which way do you want the tooltips to show? Only select if you want to override the default',
 								'required'          => 0,
 								'conditional_logic' => 0,
 								'wrapper'           => array(
@@ -316,11 +342,12 @@ class Staten_Map {
 									'id'    => '',
 								),
 								'choices' => array (
+									'default' => 'Default',
 									'click' => 'Click',
 									'hover' => 'Hover',
 								),
 
-								'default_value' => array('click'),
+								'default_value' => 'default',
 								'allow_null'    => 0,
 								'multiple'      => 0,
 								'ui'            => 0,
