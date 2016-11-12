@@ -119,6 +119,7 @@ class Staten_Map {
 
 						$string .= "
 						google.maps.event.addListener(marker" . $atts['id'] . ", 'click', function () {
+						closeOtherMarkers();
 		                infoWindow" . $atts['id'] . "_" . $counter . ".open(map" . $atts['id'] . ", marker" . $atts['id'] . ");
 		                infoWindow" . $atts['id'] . "_" . $counter . ".setPosition(new google.maps.LatLng(" . get_sub_field( 'latitude' ) . ", " . get_sub_field( 'longitude' ) . "));
 		            });";
@@ -137,6 +138,8 @@ class Staten_Map {
 
 
 					$string .= "markers" . $atts['id'] . ".push(marker" . $atts['id'] . ");";
+					$string .= "markersContainer.push(infoWindow" . $atts['id'] . "_" . $counter . ");";
+
 				endif;
 
 				$marker_output[] = $string;
@@ -153,6 +156,13 @@ class Staten_Map {
 			     style="min-height:<?php esc_attr_e( $atts['min-height'] ); ?>;"></div>
 		</div>
 		<script>
+			var markersContainer = [],
+				closeOtherMarkers = function () {
+					markersContainer.forEach(function (marker) {
+						marker.close();
+					});
+				};
+
 			<?php echo $markers_js_output;?>
 			var markers<?php esc_attr_e( $atts['id'] ) ?> = [];
 			var marker<?php esc_attr_e( $atts['id'] ) ?>;
