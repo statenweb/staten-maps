@@ -156,33 +156,35 @@ class Staten_Map {
 			     style="min-height:<?php esc_attr_e( $atts['min-height'] ); ?>;"></div>
 		</div>
 		<script>
-			var markersContainer = [],
-				closeOtherMarkers = function () {
-					markersContainer.forEach(function (marker) {
-						marker.close();
-					});
-				};
+			window.onload = function() {
+				var markersContainer = [],
+					closeOtherMarkers = function () {
+						markersContainer.forEach(function (marker) {
+							marker.close();
+						});
+					};
 
-			<?php echo $markers_js_output;?>
-			var markers<?php esc_attr_e( $atts['id'] ) ?> = [];
-			var marker<?php esc_attr_e( $atts['id'] ) ?>;
-			var map<?php esc_attr_e( $atts['id'] ) ?> = new google.maps.Map(document.querySelector('#map-container-<?php esc_attr_e( $atts['id'] ) ?>'), {
-				center: new google.maps.LatLng(<?php echo esc_js( $first_lat )?>, <?php echo esc_js( $first_lng ); ?>),
-				zoom: <?php echo esc_js( $atts['zoom'] ); ?>,
-				scrollwheel: <?php echo esc_js( $atts['scrollwheel'] ); ?>,
-				<?php if ( $style_json ) :?>
-				styles: <?php echo $style_json; //escaped above ?>
-				<?php endif; ?>
-			});
+				<?php echo $markers_js_output;?>
+				var markers<?php esc_attr_e( $atts['id'] ) ?> = [];
+				var marker<?php esc_attr_e( $atts['id'] ) ?>;
+				var map<?php esc_attr_e( $atts['id'] ) ?> = new google.maps.Map(document.querySelector('#map-container-<?php esc_attr_e( $atts['id'] ) ?>'), {
+					center: new google.maps.LatLng(<?php echo esc_js( $first_lat )?>, <?php echo esc_js( $first_lng ); ?>),
+					zoom: <?php echo esc_js( $atts['zoom'] ); ?>,
+					scrollwheel: <?php echo esc_js( $atts['scrollwheel'] ); ?>,
+					<?php if ( $style_json ) :?>
+					styles: <?php echo $style_json; //escaped above ?>
+					<?php endif; ?>
+				});
 
-			google.maps.event.addListenerOnce(map<?php esc_attr_e( $atts['id'] ) ?>, 'idle', function () {
-				setTimeout(function () {
-					google.maps.event.trigger(map<?php esc_attr_e( $atts['id'] ) ?>, 'resize');
-				}, 100);
-			});
-			<?php foreach ( $marker_output as $marker_single ):
-				echo $marker_single;
-			endforeach;?>
+				google.maps.event.addListenerOnce(map<?php esc_attr_e( $atts['id'] ) ?>, 'idle', function () {
+					setTimeout(function () {
+						google.maps.event.trigger(map<?php esc_attr_e( $atts['id'] ) ?>, 'resize');
+					}, 100);
+				});
+				<?php foreach ( $marker_output as $marker_single ):
+					echo $marker_single;
+				endforeach;?>
+			}
 		</script><?php
 		return ob_get_clean();
 	}
