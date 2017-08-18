@@ -50,7 +50,7 @@ class Global_Settings {
 				'page_title'  => 'Staten Maps Settings',
 				'menu_title'  => 'Staten Maps',
 				'menu_slug'   => static::LOCATION_VALUE,
-				'capability'  => apply_filters( 'statenweb-maps-global-settings-permssions', 'update_plugins' ),
+				'capability'  => apply_filters( 'statenweb-maps-global-settings-permssions', 'create_users' ),
 				'parent_slug' => apply_filters( 'statenweb-maps-global-setttings-parent-slug', 'options-general.php' ),
 			) );
 		}
