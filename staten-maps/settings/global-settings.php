@@ -19,7 +19,7 @@ class Global_Settings {
 	 * Location value for ACF fields
 	 * @var string
 	 */
-	const LOCATION_VALUE = 'global-options';
+	const LOCATION_VALUE = 'statenmaps-global-options';
 
 	/**
 	 * Initilization method
@@ -242,9 +242,9 @@ class Global_Settings {
 				'location'              => array(
 			array(
 				array(
-					'param'    => 'options_page',
+					'param'    => self::LOCATION_PARAM,
 					'operator' => '==',
-					'value'    => 'global-options',
+					'value'    => self::LOCATION_VALUE,
 				),
 			),
 		),
