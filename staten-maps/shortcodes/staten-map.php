@@ -21,6 +21,8 @@ class Staten_Map {
 			'id'          => null,
 			'min-height'  => '500px',
 			'zoom'        => '13',
+			'center'      => null
+
 		), $atts );
 
 		if ( ! $atts['id'] ) {
@@ -168,7 +170,7 @@ class Staten_Map {
 				var markers<?php esc_attr_e( $atts['id'] ) ?> = [];
 				var marker<?php esc_attr_e( $atts['id'] ) ?>;
 				var map<?php esc_attr_e( $atts['id'] ) ?> = new google.maps.Map(document.querySelector('#map-container-<?php esc_attr_e( $atts['id'] ) ?>'), {
-					center: new google.maps.LatLng(<?php echo esc_js( $first_lat )?>, <?php echo esc_js( $first_lng ); ?>),
+					center: new google.maps.LatLng( <?php echo ! is_null( $atts['center'] ) ?  esc_js( $atts['center' ]) : esc_js( $first_lat ) . ' , ' .  esc_js( $first_lng ) ?>),
 					zoom: <?php echo esc_js( $atts['zoom'] ); ?>,
 					scrollwheel: <?php echo esc_js( $atts['scrollwheel'] ); ?>,
 					<?php if ( $style_json ) :?>
